@@ -73,7 +73,7 @@ function newGame() {
     setGameLabel();
 
     playerNameElem.innerHTML = player.name;
-    setGamePoints(); // This function has not been created yet
+    setGamePoints();
     }
 }
 
@@ -84,6 +84,13 @@ function playerPick(playerPick) {
     computerPickElem.innerHTML = computerPick;
 
     checkRoundWinner(playerPick, computerPick);
+    setGamePoints();
+    
+    if (player.score == 10) {
+        setTimeout(playerWin, 500);
+    } else if (computer.score == 10) {
+        setTimeout(computerWin, 500);
+    }
 }
 
 var playerPickElem = document.getElementById('js-playerPick'),
@@ -97,21 +104,7 @@ function getComputerPick() {
 }
 
 function checkRoundWinner(playerPick, computerPick) {
-  playerResultElem.innerHTML = computerResultElem.innerHTML = '';
-
-   if (player.score == 10) {
-    	gameState = 'ended';
-        labelRock.style.display = 'none';
-        labelPaper.innerHTML = 'the The winner is ' + player.name;
-        labelScissor.style.display = 'none';
-    	setGameElements();
-    } else if (computer.score == 10) {
-        gameState = 'ended';
-        labelRock.style.display = 'none';
-        labelPaper.style.display = 'none';
-        labelScissor.innerHTML = 'the The winner is computer';
-        setGameElements();
-    }   
+  playerResultElem.innerHTML = computerResultElem.innerHTML = ''; 
     
   var winnerIs = 'player';
 
@@ -132,10 +125,25 @@ function checkRoundWinner(playerPick, computerPick) {
         computerResultElem.innerHTML = "Win!";
         computerPointsElem.innerHTML = ++computer.score;
     }
-
 }
 
 function setGamePoints() {
     playerPointsElem.innerHTML = player.score;
     computerPointsElem.innerHTML = computer.score;
+}
+
+function playerWin() {
+    gameState = 'ended';
+    labelRock.style.display = 'none';
+    labelPaper.innerHTML = 'the The winner is ' + player.name;
+    labelScissor.style.display = 'none';
+    setGameElements();
+}
+
+function computerWin() {
+    gameState = 'ended';
+    labelRock.style.display = 'none';
+    labelPaper.style.display = 'none';
+    labelScissor.innerHTML = 'the The winner is computer';
+    setGameElements();
 }
